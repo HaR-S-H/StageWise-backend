@@ -1,28 +1,25 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using StageWise.Helpers.Enums;
-namespace StageWise.Models{
-public class GroupStageProgress
+
+namespace StageWise.Models
+
 {
-    [Key]
+    public class GroupStageProgress
+{   [Key]
     public int Id { get; set; }
-
-    public int GroupId { get; set; }
-
-    [ForeignKey(nameof(GroupId))]
-    public Group Group { get; set; }
-
+    [Required]
+    public int StudentGroupId { get; set; }
+    [ForeignKey(nameof(StudentGroupId))]
+    public StudentGroup StudentGroup { get; set; } = null!;
+    [Required]
     public int ProjectStageId { get; set; }
-
     [ForeignKey(nameof(ProjectStageId))]
-    public ProjectStage ProjectStage { get; set; }
+    public ProjectStage ProjectStage { get; set; } = null!;
 
-    public StageStatus Status { get; set; } = StageStatus.Pending;
+    public bool IsCompleted { get; set; }
 
-    public DateTime StartedDate { get; set; } = DateTime.UtcNow;
+    public DateTime? CompletedAt { get; set; }
 
-    public DateTime? CompletedDate { get; set; }
+    public List<GroupStageDocument> Documents { get; set; } = new();
 }
-  
-  
 }

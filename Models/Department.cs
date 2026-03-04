@@ -1,22 +1,18 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StageWise.Models{
-
-  public class Department
+namespace StageWise.Models
 {
-    [Key]
-    public int Id { get; set; }
+    public class Department
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public required string Name { get; set; }
 
-    [Required, MaxLength(100)]
-    public string Name { get; set; }
-
-    public int HodId { get; set; }
-
-    [ForeignKey(nameof(HodId))]
-    public User HOD { get; set; }
+        public int HodId { get; set; }
+        public Hod? Hod { get; set; }
+        public bool IsActive{get;set;}=true;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
 }
-  
-  
-}
-
