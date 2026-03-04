@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using StageWise.Helpers.Enums;
 namespace StageWise.Models
@@ -26,10 +25,7 @@ namespace StageWise.Models
         public required string CabinNumber { get; set; }
         [Required]
         public required string BlockNumber { get; set; }
-        [Required]
-        public required string DepartmentId { get; set; }
-        [ForeignKey(nameof(DepartmentId))]
-        public Department? Department { get; set; }
+
         public bool IsActive{get;set;}=true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
             

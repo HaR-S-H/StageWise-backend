@@ -5,7 +5,7 @@ using StageWise.Helpers.Enums;
 
 namespace StageWise.Models
 
-{[Index(nameof(Section), IsUnique = true)]
+{[Index(nameof(Year), nameof(Section), IsUnique = true)]
     public class Class
     {   [Key]
         public int Id { get; set; }

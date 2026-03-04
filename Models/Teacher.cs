@@ -27,7 +27,7 @@ namespace StageWise.Models{
         [Required]
         public required string BlockNumber { get; set; }
         [Required]
-        public required string DepartmentId { get; set; }
+        public required int DepartmentId { get; set; }
         [ForeignKey(nameof(DepartmentId))]
         public Department? Department { get; set; }
         public bool IsActive{get;set;}=true;
