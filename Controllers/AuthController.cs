@@ -17,7 +17,7 @@ namespace StageWise.Controllers
             _jwtService = jwtService;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest request){
         
             var response =await _authService.LoginAsync(request);

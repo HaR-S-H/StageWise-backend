@@ -67,8 +67,7 @@ namespace StageWise.Services.Business.Implementations
     {
         var admin = await _adminRepository.GetByEmailAsync(request.Email);
         if (admin == null) return null;
-
-        if (!_passwordHasher.VerifyPassword(request.Password,admin.Password))
+        if (!_passwordHasher.VerifyPassword(admin.Password,request.Password))
             return null;
 
         return _mapper.Map<LoginResponse>(admin);

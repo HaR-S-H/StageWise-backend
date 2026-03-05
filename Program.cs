@@ -11,6 +11,7 @@ using StageWise.Services.Business.Implementations;
 using StageWise.Services.Business.Interfaces;
 using StageWise.Services.Infrastructure.Implementations;
 using StageWise.Services.Infrastructure.Interfaces;
+using StageWise.Services.Infrastructure.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,8 @@ builder.Services.AddScoped<IHodRepository, HodRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
+
+builder.Services.AddHostedService<EmailWorker>();
 // DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

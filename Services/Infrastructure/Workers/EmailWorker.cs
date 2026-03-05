@@ -4,21 +4,20 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using StageWise.Services.Infrastructure.Interfaces;
 using StageWise.Services.Infrastructure.Models;
-
 namespace StageWise.Services.Infrastructure.Workers
 {
-    public class EmailWorker
+    public class EmailWorker : BackgroundService
     {
-       private readonly IEmailService _emailService;
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration _configuration;
 
-        public EmailWorker(IEmailService emailService, IConfiguration configuration)
+        public EmailWorker(IServiceScopeFactory scopeFactory, IConfiguration configuration)
         {
-            _emailService = emailService;
+            _scopeFactory = scopeFactory;
             _configuration = configuration;
         }
 
-        public async Task Start()
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var factory = new ConnectionFactory()
             {
@@ -45,16 +44,24 @@ namespace StageWise.Services.Infrastructure.Workers
 
                     var email = JsonSerializer.Deserialize<EmailMessage>(json);
 
-                    await _emailService.SendEmail(
-                        email!.To,
-                        email.Subject,
-                        email.Body);
+                    if (email != null)
+                    {
+                        using var scope = _scopeFactory.CreateScope();
+
+                        var emailService = scope.ServiceProvider
+                            .GetRequiredService<IEmailService>();
+
+                        await emailService.SendEmail(
+                            email.To,
+                            email.Subject,
+                            email.Body);
+                    }
 
                     await channel.BasicAckAsync(ea.DeliveryTag, false);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await channel.BasicNackAsync(ea.DeliveryTag, false, true);
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
             };
 
@@ -62,6 +69,8 @@ namespace StageWise.Services.Infrastructure.Workers
                 queue: "EmailQueue",
                 autoAck: false,
                 consumer: consumer);
+
+            await Task.Delay(Timeout.Infinite, stoppingToken);
         }
     }
 }
