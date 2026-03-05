@@ -6,15 +6,17 @@ namespace StageWise.Services.Infrastructure.Implementations
 {
     public class RabbitMqService : IMessageQueue
     {
-        private readonly string _hostName = "localhost";
-        private readonly IConnection _connection;
+         private readonly IConnection _connection;
         private readonly IChannel _channel;
+        private readonly IConfiguration _configuration;
 
-        public RabbitMqService()
+        public RabbitMqService(IConfiguration configuration)
         {
+            _configuration = configuration;
+
             var factory = new ConnectionFactory()
             {
-                HostName = _hostName
+                Uri = new Uri(_configuration["RabbitMQ:Url"]!)
             };
 
             _connection = factory.CreateConnectionAsync().Result;
@@ -24,7 +26,7 @@ namespace StageWise.Services.Infrastructure.Implementations
         public async Task Publish(string queueName, string message)
         {
             var properties = new BasicProperties();
-            // Create queue if not exists
+
             await _channel.QueueDeclareAsync(
                 queue: queueName,
                 durable: false,
@@ -33,7 +35,6 @@ namespace StageWise.Services.Infrastructure.Implementations
 
             var body = Encoding.UTF8.GetBytes(message);
 
-            // Publish message
             await _channel.BasicPublishAsync(
                 exchange: "",
                 routingKey: queueName,

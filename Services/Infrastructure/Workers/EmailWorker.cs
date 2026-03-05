@@ -9,16 +9,21 @@ namespace StageWise.Services.Infrastructure.Workers
 {
     public class EmailWorker
     {
-        private readonly IEmailService _emailService;
+       private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
 
-        public EmailWorker(IEmailService emailService)
+        public EmailWorker(IEmailService emailService, IConfiguration configuration)
         {
             _emailService = emailService;
+            _configuration = configuration;
         }
 
         public async Task Start()
         {
-             var factory = new ConnectionFactory { HostName = "localhost" };
+            var factory = new ConnectionFactory()
+            {
+                Uri = new Uri(_configuration["RabbitMQ:Url"]!)
+            };
 
             var connection = await factory.CreateConnectionAsync();
             var channel = await connection.CreateChannelAsync();
@@ -44,9 +49,10 @@ namespace StageWise.Services.Infrastructure.Workers
                         email!.To,
                         email.Subject,
                         email.Body);
+
                     await channel.BasicAckAsync(ea.DeliveryTag, false);
                 }
-                catch (Exception)
+                catch
                 {
                     await channel.BasicNackAsync(ea.DeliveryTag, false, true);
                 }
