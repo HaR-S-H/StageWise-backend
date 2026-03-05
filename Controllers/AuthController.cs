@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using StageWise.Dtos.Auth.Request;
 using StageWise.Dtos.Auth.Response;
@@ -11,22 +10,22 @@ namespace StageWise.Controllers
     [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase{
         private readonly IAuthService _authService;
-        private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
-        public AuthController(IAuthService authService, IJwtService jwtService,IMapper mapper)
+        public AuthController(IAuthService authService, IJwtService jwtService)
         {
             _authService = authService;    
             _jwtService = jwtService;
-            _mapper = mapper;
         }
+
+        [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest request){
         
-            var user =await _authService.LoginAsync(request);
-            if (user == null)
+            var response =await _authService.LoginAsync(request);
+            if (response == null)
             {
                 return Unauthorized("Invalid credentials");
             }
-            var token = _jwtService.GenerateToken(user.Id, user.Email, user.Role.ToString());
+            var token = _jwtService.GenerateToken(response.Id, response.Email, response.Role.ToString());
             Response.Cookies.Append("token", token, new CookieOptions
     {
         HttpOnly = true,
@@ -34,7 +33,6 @@ namespace StageWise.Controllers
         SameSite = SameSiteMode.Strict,
         Expires = DateTime.UtcNow.AddHours(1)
     });
-            var response = _mapper.Map<LoginResponse>(user);
           return Ok(response);
             
         }

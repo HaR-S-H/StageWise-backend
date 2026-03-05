@@ -1,5 +1,7 @@
 using MailKit.Net.Smtp;
 using MimeKit;
+using StageWise.Services.Infrastructure.Interfaces;
+
 namespace StageWise.Services.Infrastructure.Implementations
 {
     public class EmailService : IEmailService

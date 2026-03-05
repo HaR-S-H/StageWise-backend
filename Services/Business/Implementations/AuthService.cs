@@ -14,14 +14,16 @@ namespace StageWise.Services.Business.Implementations
         private readonly IHodRepository _hodRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly ITeacherRepository _teacherRepository;
+        private readonly IAdminRepository _adminRepository;
         private readonly IMapper _mapper;
 
-        public AuthService(IPasswordHasher passwordHasher, IHodRepository hodRepository, IStudentRepository studentRepository, ITeacherRepository teacherRepository,IMapper mapper)
+        public AuthService(IPasswordHasher passwordHasher, IHodRepository hodRepository, IStudentRepository studentRepository, ITeacherRepository teacherRepository,IMapper mapper,IAdminRepository adminRepository)
         {
             _passwordHasher = passwordHasher;
             _hodRepository = hodRepository;
             _studentRepository = studentRepository;
             _teacherRepository = teacherRepository;
+            _adminRepository = adminRepository;
             _mapper = mapper;
 
         }
@@ -60,6 +62,16 @@ namespace StageWise.Services.Business.Implementations
             return null;
 
         return _mapper.Map<LoginResponse>(teacher);
+    }
+    if (request.Role == UserRole.Admin)
+    {
+        var admin = await _adminRepository.GetByEmailAsync(request.Email);
+        if (admin == null) return null;
+
+        if (!_passwordHasher.VerifyPassword(request.Password,admin.Password))
+            return null;
+
+        return _mapper.Map<LoginResponse>(admin);
     }
 
     return null;
