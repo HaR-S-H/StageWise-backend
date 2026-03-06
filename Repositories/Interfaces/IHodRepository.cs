@@ -6,6 +6,10 @@ namespace StageWise.Repositories.Interfaces
     {
 
         Task<Hod?> GetByEmailAsync(string email);
-        
+        Task AddAsync(Hod hod);
+        Task<List<Hod>> GetAllAsync();
+        Task DeleteAsync(Hod hod);
+        Task UpdateAsync(Hod hod);
+        Task SaveAsync();
     }
 }

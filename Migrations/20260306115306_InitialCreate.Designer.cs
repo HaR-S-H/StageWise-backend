@@ -12,7 +12,7 @@ using StageWise.Data;
 namespace StageWise.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260304093425_InitialCreate")]
+    [Migration("20260306115306_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -230,6 +230,9 @@ namespace StageWise.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("BlockNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -350,6 +353,9 @@ namespace StageWise.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
@@ -463,6 +469,9 @@ namespace StageWise.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BlockNumber")
                         .IsRequired()

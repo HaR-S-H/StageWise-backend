@@ -17,7 +17,8 @@ namespace StageWise.Models
         public required string Email { get; set; }
         [Required]
         public required string Password { get; set; }
-        public UserRole Role { get; set; }=UserRole.Hod;
+        public UserRole Role { get; set; } = UserRole.Hod;
+        public string? Avatar{ get; set; }
         [Required]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Contact number must be exactly 10 digits")]
         public required string ContactNumber { get; set; }

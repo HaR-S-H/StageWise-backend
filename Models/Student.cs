@@ -13,8 +13,9 @@ public class Student
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(100)]
-    public required string Name { get; set; }
+        [MaxLength(100)]
+        public required string Name { get; set; }
+        public string? Avatar{ get; set; }
 
     [Required]
     [EmailAddress]

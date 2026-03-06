@@ -36,7 +36,7 @@ namespace StageWise.Services.Business.Implementations
         var hod = await _hodRepository.GetByEmailAsync(request.Email);
         if (hod == null) return null;
 
-        if (!_passwordHasher.VerifyPassword(request.Password, hod.Password))
+        if (!_passwordHasher.VerifyPassword(hod.Password,request.Password))
             return null;
 
         return _mapper.Map<LoginResponse>(hod);
@@ -47,7 +47,7 @@ namespace StageWise.Services.Business.Implementations
         var student = await _studentRepository.GetByEmailAsync(request.Email);
         if (student == null) return null;
 
-        if (!_passwordHasher.VerifyPassword(request.Password, student.Password))
+        if (!_passwordHasher.VerifyPassword(student.Password, request.Password))
             return null;
 
         return _mapper.Map<LoginResponse>(student);
@@ -58,7 +58,7 @@ namespace StageWise.Services.Business.Implementations
         var teacher = await _teacherRepository.GetByEmailAsync(request.Email);
         if (teacher == null) return null;
 
-        if (!_passwordHasher.VerifyPassword(request.Password, teacher.Password))
+        if (!_passwordHasher.VerifyPassword(teacher.Password,request.Password))
             return null;
 
         return _mapper.Map<LoginResponse>(teacher);

@@ -22,6 +22,7 @@ namespace StageWise.Models{
         [Required]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Contact number must be exactly 10 digits")]
         public required string ContactNumber { get; set; }
+        public string? Avatar{ get; set; }
         [Required]
         public required string CabinNumber { get; set; }
         [Required]

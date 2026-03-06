@@ -8,6 +8,7 @@ using StageWise.Helpers.Exceptions;
 using StageWise.Helpers.Implementations;
 using StageWise.Helpers.Interfaces;
 using StageWise.Mappings;
+using StageWise.Models;
 using StageWise.Repositories.Implementations;
 using StageWise.Repositories.Interfaces;
 using StageWise.Services.Business.Implementations;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 // Business
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IHodService, HodService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // Repositories
