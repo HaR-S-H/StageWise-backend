@@ -10,6 +10,7 @@ namespace StageWise.Services.Business.Interfaces
         Task<CreateAdminResponse> CreateAdminAsync(CreateAdminRequest request);
         Task<GetAdminResponse> GetAdminAsync();
         Task<List<GetAdminResponse>> GetAdminsAsync();
+        Task<DeleteAdminResponse> DeleteAdminAsync();
 
     }
     

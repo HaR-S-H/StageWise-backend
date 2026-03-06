@@ -6,26 +6,35 @@ using StageWise.Repositories.Interfaces;
 namespace StageWise.Repositories.Implementations
 {
 
-    public class AdminRepository   : IAdminRepository
+    public class AdminRepository : IAdminRepository
     {
-
         private readonly ApplicationDbContext _context;
 
-        public AdminRepository(ApplicationDbContext context)    
+        public AdminRepository(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public async Task<Admin?> GetByEmailAsync(string email)
         {
-            return await _context.Admins.FirstOrDefaultAsync(a => a.Email == email);
+            return await _context.Admins
+                .FirstOrDefaultAsync(a => a.Email == email);
         }
+
         public async Task<List<Admin>> GetAllAsync()
         {
-            return await _context.Admins.ToListAsync();
+            return await _context.Admins
+                .ToListAsync();
         }
-         public async Task AddAsync(Admin admin)
+
+        public async Task AddAsync(Admin admin)
         {
             await _context.Admins.AddAsync(admin);
+        }
+
+        public async Task DeleteAsync(Admin admin)
+        {
+            _context.Admins.Remove(admin);
         }
 
         public async Task SaveAsync()
@@ -33,5 +42,5 @@ namespace StageWise.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
     }
-    
+
 }

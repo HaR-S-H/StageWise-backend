@@ -35,9 +35,16 @@ public class AdminController : ControllerBase
         [HttpGet("All")]
         public async Task<ActionResult<List<GetAdminResponse>>> GetAdmins()
         {
-            var response=await _adminService.GetAdminsAsync();
+            var response = await _adminService.GetAdminsAsync();
             return Ok(response);
-        } 
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task<ActionResult<DeleteAdminResponse>> DeleteAdmin()
+        {
+            var response = await _adminService.DeleteAdminAsync();
+            return Ok(response);
+        }
 
 }
     

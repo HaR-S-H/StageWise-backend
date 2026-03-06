@@ -8,6 +8,7 @@ namespace StageWise.Repositories.Interfaces
         Task<Admin?> GetByEmailAsync(string email);
         Task AddAsync(Admin admin);
         Task<List<Admin>> GetAllAsync();
+        Task DeleteAsync(Admin admin);
         Task SaveAsync();
     }
 }

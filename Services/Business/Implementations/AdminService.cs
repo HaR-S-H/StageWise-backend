@@ -19,7 +19,7 @@ namespace StageWise.Services.Business.Implementations
         private readonly IPasswordHasher _passwordHasher;
         private readonly IMessageQueue _messageQueue;
         private readonly IMapper _mapper;
-        public AdminService(IAdminRepository adminRepository, IPasswordHasher passwordHasher, IMessageQueue messageQueue,ICurrentUserService currentUser,IMapper mapper)
+        public AdminService(IAdminRepository adminRepository, IPasswordHasher passwordHasher, IMessageQueue messageQueue, ICurrentUserService currentUser, IMapper mapper)
         {
 
             _adminRepository = adminRepository;
@@ -28,7 +28,7 @@ namespace StageWise.Services.Business.Implementations
             _currentUser = currentUser;
             _mapper = mapper;
         }
-       public async Task<CreateAdminResponse> CreateAdminAsync(CreateAdminRequest request)
+        public async Task<CreateAdminResponse> CreateAdminAsync(CreateAdminRequest request)
         {
             var existingAdmin = await _adminRepository.GetByEmailAsync(request.Email);
 
@@ -77,8 +77,19 @@ namespace StageWise.Services.Business.Implementations
         public async Task<List<GetAdminResponse>> GetAdminsAsync()
         {
             var admins = await _adminRepository.GetAllAsync();
-            if(admins.Count==0) throw new AppException("No admins found", 404);
+            if (admins.Count == 0) throw new AppException("No admins found", 404);
             return _mapper.Map<List<GetAdminResponse>>(admins);
         }
+        public async Task<DeleteAdminResponse> DeleteAdminAsync()
+        {
+            var admin = await _adminRepository.GetByEmailAsync(_currentUser.Email);
+            if (admin == null) throw new AppException("Admin not found", 404);
+            await _adminRepository.DeleteAsync(admin);
+            await _adminRepository.SaveAsync();
+            return new DeleteAdminResponse { Success = true, Message = "Admin deleted successfully" };
+        }
+
+      
     }
+    
 }
