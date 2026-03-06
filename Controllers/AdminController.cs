@@ -31,6 +31,13 @@ public class AdminController : ControllerBase
             var response = await _adminService.GetAdminAsync();
             return Ok(response);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("All")]
+        public async Task<ActionResult<List<GetAdminResponse>>> GetAdmins()
+        {
+            var response=await _adminService.GetAdminsAsync();
+            return Ok(response);
+        } 
 
 }
     

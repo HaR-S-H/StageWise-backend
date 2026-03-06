@@ -19,6 +19,10 @@ namespace StageWise.Repositories.Implementations
         {
             return await _context.Admins.FirstOrDefaultAsync(a => a.Email == email);
         }
+        public async Task<List<Admin>> GetAllAsync()
+        {
+            return await _context.Admins.ToListAsync();
+        }
          public async Task AddAsync(Admin admin)
         {
             await _context.Admins.AddAsync(admin);

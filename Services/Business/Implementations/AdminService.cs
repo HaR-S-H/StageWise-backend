@@ -74,5 +74,11 @@ namespace StageWise.Services.Business.Implementations
             if (admin == null) throw new AppException("Admin not found", 404);
             return _mapper.Map<GetAdminResponse>(admin);
         }
+        public async Task<List<GetAdminResponse>> GetAdminsAsync()
+        {
+            var admins = await _adminRepository.GetAllAsync();
+            if(admins.Count==0) throw new AppException("No admins found", 404);
+            return _mapper.Map<List<GetAdminResponse>>(admins);
+        }
     }
 }
