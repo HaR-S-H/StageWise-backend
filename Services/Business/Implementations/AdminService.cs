@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AutoMapper;
 using StageWise.Dtos.Admin.Request;
 using StageWise.Dtos.Admin.Response;
 using StageWise.Helpers;
@@ -13,16 +14,19 @@ namespace StageWise.Services.Business.Implementations
 {
     public class AdminService : IAdminService
     {
+        private readonly ICurrentUserService _currentUser;
         private readonly IAdminRepository _adminRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IMessageQueue _messageQueue;
-        public AdminService(IAdminRepository adminRepository, IPasswordHasher passwordHasher, IMessageQueue messageQueue)
+        private readonly IMapper _mapper;
+        public AdminService(IAdminRepository adminRepository, IPasswordHasher passwordHasher, IMessageQueue messageQueue,ICurrentUserService currentUser,IMapper mapper)
         {
 
             _adminRepository = adminRepository;
             _passwordHasher = passwordHasher;
             _messageQueue = messageQueue;
-
+            _currentUser = currentUser;
+            _mapper = mapper;
         }
        public async Task<CreateAdminResponse> CreateAdminAsync(CreateAdminRequest request)
         {
@@ -64,6 +68,11 @@ namespace StageWise.Services.Business.Implementations
             };
         }
 
-        
+        public async Task<GetAdminResponse> GetAdminAsync()
+        {
+            var admin = await _adminRepository.GetByEmailAsync(_currentUser.Email);
+            if (admin == null) throw new AppException("Admin not found", 404);
+            return _mapper.Map<GetAdminResponse>(admin);
+        }
     }
 }
