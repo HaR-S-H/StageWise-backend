@@ -22,13 +22,19 @@ namespace StageWise.Controllers
             var response = await _hodService.CreateHodAsync(request);
             return Ok(response);
         }
-        // [Authorize(Roles ="Admin")]
-        // [Authorize(Roles = "Hod")]
+        [Authorize(Roles ="Hod")]
         [HttpGet]
         public async Task<ActionResult<GetHodResponse>> GetHod()
         {
             var response = await _hodService.GetHodAsync();
             return Ok(response);
         }
-    }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("All")]
+        public async Task<ActionResult<List<GetHodResponse>>> GetHods()
+            {
+            var hods = await _hodService.GetHodsAsync();
+                return Ok(hods);
+            }
+        }
 }

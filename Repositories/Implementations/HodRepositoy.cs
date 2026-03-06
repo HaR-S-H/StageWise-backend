@@ -26,9 +26,9 @@ namespace StageWise.Repositories.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<List<Hod>> GetAllAsync()
+        public async Task<List<Hod>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Hods.ToListAsync();
         }
 
         public async Task<Hod?> GetByEmailAsync(string email)

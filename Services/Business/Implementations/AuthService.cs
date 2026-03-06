@@ -39,8 +39,11 @@ namespace StageWise.Services.Business.Implementations
         if (!_passwordHasher.VerifyPassword(hod.Password,request.Password))
             return null;
 
-        return _mapper.Map<LoginResponse>(hod);
-    }
+                var response = _mapper.Map<LoginResponse>(hod);
+                response.Role = UserRole.Hod;
+
+                return response;
+            }
 
     if (request.Role == UserRole.Student)
     {
@@ -50,8 +53,11 @@ namespace StageWise.Services.Business.Implementations
         if (!_passwordHasher.VerifyPassword(student.Password, request.Password))
             return null;
 
-        return _mapper.Map<LoginResponse>(student);
-    }
+                var response = _mapper.Map<LoginResponse>(student);
+                response.Role = UserRole.Student;
+
+                return response;
+            }
 
     if (request.Role == UserRole.Teacher)
     {
@@ -61,8 +67,11 @@ namespace StageWise.Services.Business.Implementations
         if (!_passwordHasher.VerifyPassword(teacher.Password,request.Password))
             return null;
 
-        return _mapper.Map<LoginResponse>(teacher);
-    }
+                var response = _mapper.Map<LoginResponse>(teacher);
+                response.Role = UserRole.Teacher;
+
+                return response;
+            }
     if (request.Role == UserRole.Admin)
     {
         var admin = await _adminRepository.GetByEmailAsync(request.Email);

@@ -68,5 +68,12 @@ namespace StageWise.Services.Business.Implementations
             if (hod == null) throw new AppException("Hod not found", 404);
             return _mapper.Map<GetHodResponse>(hod);
         }
+
+        public async Task<List<GetHodResponse>> GetHodsAsync()
+        {
+            var hods=await _hodRepository.GetAllAsync();
+            if (hods.Count == 0) throw new AppException("No hods found", 404);
+            return _mapper.Map<List<GetHodResponse>>(hods);
+        }
     }
 }
