@@ -1,34 +1,47 @@
+using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
+using Microsoft.Extensions.Configuration;
 
 namespace StageWise.Services.Infrastructure.Implementations
 {
-  public class S3Service : IS3Service
-{
-    private readonly IAmazonS3 _s3;
-    private readonly string bucketName = "stagewise-documents";
-
-    public S3Service(IAmazonS3 s3)
+    public class S3Service : IS3Service
     {
-        _s3 = s3;
-    }
+        private readonly IAmazonS3 _s3;
+        private readonly string _bucketName;
 
-    public async Task<string> UploadFileAsync(IFormFile file)
-    {
-        using var stream = file.OpenReadStream();
-
-        var uploadRequest = new TransferUtilityUploadRequest
+        public S3Service(IConfiguration configuration)
         {
-            InputStream = stream,
-            Key = Guid.NewGuid().ToString(),
-            BucketName = bucketName
-        };
+            var accessKey = configuration["AWS:AccessKey"];
+            var secretKey = configuration["AWS:SecretKey"];
+            var region = configuration["AWS:Region"];
+            _bucketName = configuration["AWS:BucketName"]!;
 
-        var transferUtility = new TransferUtility(_s3);
-        await transferUtility.UploadAsync(uploadRequest);
+            var config = new AmazonS3Config
+            {
+                RegionEndpoint = RegionEndpoint.GetBySystemName(region)
+            };
 
-        return $"https://{bucketName}.s3.amazonaws.com/{uploadRequest.Key}";
+            _s3 = new AmazonS3Client(accessKey, secretKey, config);
+        }
+
+        public async Task<string> UploadFileAsync(IFormFile file)
+        {
+            using var stream = file.OpenReadStream();
+
+            var key = $"avatars/{Guid.NewGuid()}_{file.FileName}";
+
+            var uploadRequest = new TransferUtilityUploadRequest
+            {
+                InputStream = stream,
+                Key = key,
+                BucketName = _bucketName
+            };
+
+            var transferUtility = new TransferUtility(_s3);
+            await transferUtility.UploadAsync(uploadRequest);
+
+            return $"https://{_bucketName}.s3.amazonaws.com/{key}";
+        }
     }
 }
-}
-

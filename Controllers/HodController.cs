@@ -38,7 +38,7 @@ namespace StageWise.Controllers
         }
         [Authorize(Roles = "Admin,Hod")]
         [HttpPatch]
-        public async Task<ActionResult<UpdateHodResponse>> UpdateHod(UpdateHodRequest request)
+        public async Task<ActionResult<UpdateHodResponse>> UpdateHod([FromForm] UpdateHodRequest request)
         {
             var response = await _hodService.UpdateHodAsync(request);
             return Ok(response);

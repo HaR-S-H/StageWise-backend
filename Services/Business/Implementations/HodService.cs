@@ -20,13 +20,15 @@ namespace StageWise.Services.Business.Implementations
         private readonly IPasswordHasher _passwordHasher;
         private readonly IMessageQueue _messageQueue;
         private readonly IMapper _mapper;
-        public HodService(ICurrentUserService currentUserService,IHodRepository hodRepository,IPasswordHasher passwordHasher,IMessageQueue messageQueue,IMapper mapper)
+        private readonly IS3Service _s3Service;
+        public HodService(ICurrentUserService currentUserService,IHodRepository hodRepository,IPasswordHasher passwordHasher,IMessageQueue messageQueue,IMapper mapper,IS3Service s3Service)
         {
             _currentUser = currentUserService;
             _hodRepository = hodRepository;
             _passwordHasher = passwordHasher;
             _messageQueue = messageQueue;
             _mapper = mapper;
+            _s3Service = s3Service;
         }
 
         public async Task<CreateHodResponse> CreateHodAsync(CreateHodRequest request)
@@ -96,7 +98,10 @@ namespace StageWise.Services.Business.Implementations
                 hod.Name = request.Name;
 
             if (request.Avatar != null)
-                hod.Avatar = request.Avatar;
+            {
+                var avatarUrl = await _s3Service.UploadFileAsync(request.Avatar);
+                hod.Avatar = avatarUrl;
+            }
 
             if (request.BlockNumber != null)
                 hod.BlockNumber = request.BlockNumber;

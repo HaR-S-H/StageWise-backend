@@ -1,4 +1,5 @@
 using System.Text;
+using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 // Infrastructure
 builder.Services.AddSingleton<IMessageQueue, RabbitMqService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IS3Service, S3Service>();
 
 // Business
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -54,6 +56,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAWSService<IAmazonS3>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>
