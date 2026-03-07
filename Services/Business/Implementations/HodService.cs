@@ -1,5 +1,6 @@
 using System.Text.Json;
 using AutoMapper;
+using StageWise.Dtos.Hod;
 using StageWise.Dtos.Hod.Request;
 using StageWise.Dtos.Hod.Response;
 using StageWise.Helpers;
@@ -74,6 +75,37 @@ namespace StageWise.Services.Business.Implementations
             var hods=await _hodRepository.GetAllAsync();
             if (hods.Count == 0) throw new AppException("No hods found", 404);
             return _mapper.Map<List<GetHodResponse>>(hods);
+        }
+
+        public async Task<UpdateHodResponse> UpdateHodAsync(UpdateHodRequest request)
+        {
+            var hod = await _hodRepository.GetByIdAsync(request.Id);
+
+            if (hod == null) throw new AppException("Hod not found", 404);
+
+            if (request.Name != null)
+                hod.Name = request.Name;
+
+            if (request.Avatar != null)
+                hod.Avatar = request.Avatar;
+
+            if (request.BlockNumber != null)
+                hod.BlockNumber = request.BlockNumber;
+
+            if (request.CabinNumber != null)
+                hod.CabinNumber = request.CabinNumber;
+
+            if (request.ContactNumber != null)
+                hod.ContactNumber = request.ContactNumber;
+
+            await _hodRepository.UpdateAsync(hod);
+            await _hodRepository.SaveAsync();
+
+            return new UpdateHodResponse
+            {
+                Success = true,
+                Message = $"Update Hod {request.Name} Successfully."
+            };
         }
     }
 }

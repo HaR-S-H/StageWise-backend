@@ -36,14 +36,19 @@ namespace StageWise.Repositories.Implementations
             return await _context.Hods.FirstOrDefaultAsync(h => h.Email == email);
         }
 
+        public async Task<Hod?> GetByIdAsync(int Id)
+        {
+            return await _context.Hods.FirstOrDefaultAsync(h => h.Id == Id);
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Hod hod)
+        public async Task UpdateAsync(Hod hod)
         {
-            throw new NotImplementedException();
+            _context.Hods.Update(hod);
         }
     }
     

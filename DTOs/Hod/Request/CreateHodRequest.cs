@@ -10,7 +10,6 @@ namespace StageWise.Dtos.Hod.Request
         [EmailAddress]
         [Required]
         public required string Email { get; set; }
-        public UserRole Role { get; set; } = UserRole.Hod;
         public string? Avatar { get; set; }
         [Required]
         [MinLength(10)]
