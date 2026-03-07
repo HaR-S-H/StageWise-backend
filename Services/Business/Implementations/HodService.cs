@@ -63,6 +63,15 @@ namespace StageWise.Services.Business.Implementations
             };
         }
 
+        public async Task<DeleteHodResponse> DeleteHodAsync(DeleteHodRequest request)
+        {
+           var hod=await _hodRepository.GetByIdAsync(request.Id);
+            if (hod == null) throw new AppException("Hod not found", 404);
+            await _hodRepository.DeleteAsync(hod);
+            await _hodRepository.SaveAsync();
+            return new DeleteHodResponse { Success = true, Message = "Hod deleted successfully" };
+        }
+
         public async Task<GetHodResponse> GetHodAsync()
         {
             var hod = await _hodRepository.GetByEmailAsync(_currentUser.Email);

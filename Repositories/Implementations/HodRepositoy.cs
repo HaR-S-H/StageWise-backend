@@ -21,9 +21,9 @@ namespace StageWise.Repositories.Implementations
             await _context.AddAsync(hod);
         }
 
-        public Task DeleteAsync(Hod hod)
+        public async Task DeleteAsync(Hod hod)
         {
-            throw new NotImplementedException();
+             _context.Hods.Remove(hod);
         }
 
         public async Task<List<Hod>> GetAllAsync()

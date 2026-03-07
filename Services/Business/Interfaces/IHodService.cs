@@ -10,5 +10,6 @@ namespace StageWise.Services.Business.Interfaces
         Task<GetHodResponse> GetHodAsync();
         Task<List<GetHodResponse>> GetHodsAsync();
         Task<UpdateHodResponse> UpdateHodAsync(UpdateHodRequest request);
+        Task<DeleteHodResponse> DeleteHodAsync(DeleteHodRequest request);
     }
 }

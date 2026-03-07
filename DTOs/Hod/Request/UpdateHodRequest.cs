@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace StageWise.Dtos.Hod
+namespace StageWise.Dtos.Hod.Request
 {
     public class UpdateHodRequest
     {  [Required]

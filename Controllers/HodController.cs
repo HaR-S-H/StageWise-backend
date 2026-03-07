@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Update.Internal;
-using StageWise.Dtos.Hod;
 using StageWise.Dtos.Hod.Request;
 using StageWise.Dtos.Hod.Response;
 using StageWise.Services.Business.Interfaces;
@@ -43,6 +41,13 @@ namespace StageWise.Controllers
         public async Task<ActionResult<UpdateHodResponse>> UpdateHod(UpdateHodRequest request)
         {
             var response = await _hodService.UpdateHodAsync(request);
+            return Ok(response);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task<ActionResult<DeleteHodResponse>> DeleteHod(DeleteHodRequest request)
+        {
+            var response=await _hodService.DeleteHodAsync(request);
             return Ok(response);
         }
         }

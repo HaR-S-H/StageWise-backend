@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace StageWise.Dtos.Hod.Request
+namespace StageWise.Dtos.Hod.Response
 {
     public class UpdateHodResponse
     {
