@@ -37,6 +37,7 @@ builder.Services.AddScoped<IS3Service, S3Service>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IHodService, HodService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // Repositories

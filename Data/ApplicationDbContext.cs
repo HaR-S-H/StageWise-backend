@@ -134,13 +134,6 @@ namespace StageWise.Data
                 .HasForeignKey(g => g.ProjectStageId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Teacher -> Department
-            modelBuilder.Entity<Teacher>()
-                .HasOne(t => t.Department)
-                .WithMany()
-                .HasForeignKey(t => t.DepartmentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             // Hod -> Department
            
         }

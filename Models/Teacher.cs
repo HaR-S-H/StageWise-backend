@@ -27,10 +27,6 @@ namespace StageWise.Models{
         public required string CabinNumber { get; set; }
         [Required]
         public required string BlockNumber { get; set; }
-        [Required]
-        public required int DepartmentId { get; set; }
-        [ForeignKey(nameof(DepartmentId))]
-        public Department? Department { get; set; }
         public bool IsActive{get;set;}=true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
