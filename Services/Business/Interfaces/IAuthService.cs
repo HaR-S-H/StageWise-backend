@@ -5,6 +5,6 @@ namespace StageWise.Services.Business.Interfaces
     public interface IAuthService
     {
         Task<LoginResponse?> LoginAsync(LoginRequest request);
-      
+        Task<ForgetPasswordResponse> ForgetPasswordAsync(ForgetPasswordRequest request);
     }
 }

@@ -18,25 +18,38 @@ namespace StageWise.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<LoginResponse>> Login(LoginRequest request){
-        
-            var response =await _authService.LoginAsync(request);
+        public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
+        {
+
+            var response = await _authService.LoginAsync(request);
             if (response == null)
             {
                 return Unauthorized("Invalid credentials");
             }
             var token = _jwtService.GenerateToken(response.Id, response.Email, response.Role.ToString());
             Response.Cookies.Append("token", token, new CookieOptions
-    {
-        HttpOnly = true,
-        Secure = true,
-        SameSite = SameSiteMode.Strict,
-        Expires = DateTime.UtcNow.AddHours(1)
-    });
-          return Ok(response);
-            
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(1)
+            });
+            return Ok(response);
+
         }
-        
+        [HttpPost("Logout")]
+        public ActionResult<LogoutResponse> Logout()
+        {
+            Response.Cookies.Delete("token");
+            var response = new LogoutResponse { Success = true, Message = "Logout Successfully." };
+            return Ok(response);
+        }
+        [HttpPost("ForgetPassword")]
+        public async Task<ActionResult<ForgetPasswordResponse>> ForgetPassword(ForgetPasswordRequest request)
+        {
+            var response = await _authService.ForgetPasswordAsync(request);
+            return Ok(response);
+        }
     }
     
 }

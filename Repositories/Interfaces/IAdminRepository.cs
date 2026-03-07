@@ -9,6 +9,7 @@ namespace StageWise.Repositories.Interfaces
         Task AddAsync(Admin admin);
         Task<List<Admin>> GetAllAsync();
         Task DeleteAsync(Admin admin);
+        Task UpdateAsync(Admin admin);
         Task SaveAsync();
     }
 }

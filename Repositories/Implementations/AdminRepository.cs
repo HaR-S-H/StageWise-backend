@@ -41,6 +41,11 @@ namespace StageWise.Repositories.Implementations
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateAsync(Admin admin)
+        {
+            _context.Admins.Update(admin);
+        }
     }
 
 }

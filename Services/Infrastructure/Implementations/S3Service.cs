@@ -1,7 +1,6 @@
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
-using Microsoft.Extensions.Configuration;
 
 namespace StageWise.Services.Infrastructure.Implementations
 {
