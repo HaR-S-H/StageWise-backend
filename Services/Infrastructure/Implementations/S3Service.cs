@@ -24,23 +24,22 @@ namespace StageWise.Services.Infrastructure.Implementations
             _s3 = new AmazonS3Client(accessKey, secretKey, config);
         }
 
-        public async Task<string> UploadFileAsync(IFormFile file)
+        public async Task UploadBytesAsync(byte[] fileBytes, string key, string contentType)
         {
-            using var stream = file.OpenReadStream();
-
-            var key = $"avatars/{Guid.NewGuid()}_{file.FileName}";
+            using var stream = new MemoryStream(fileBytes);
 
             var uploadRequest = new TransferUtilityUploadRequest
             {
                 InputStream = stream,
                 Key = key,
-                BucketName = _bucketName
+                BucketName = _bucketName,
+                ContentType = contentType
             };
 
             var transferUtility = new TransferUtility(_s3);
+
             await transferUtility.UploadAsync(uploadRequest);
 
-            return $"https://{_bucketName}.s3.amazonaws.com/{key}";
         }
     }
 }

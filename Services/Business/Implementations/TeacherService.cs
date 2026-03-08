@@ -1,6 +1,5 @@
 using System.Text.Json;
 using AutoMapper;
-using StageWise.Dtos.Teacher;
 using StageWise.Dtos.Teacher.Request;
 using StageWise.Dtos.Teacher.Response;
 using StageWise.Helpers;
@@ -10,6 +9,7 @@ using StageWise.Models;
 using StageWise.Repositories.Interfaces;
 using StageWise.Services.Business.Interfaces;
 using StageWise.Services.Infrastructure.Interfaces;
+using StageWise.Services.Infrastructure.Models;
 
 namespace StageWise.Services.Business.Implementations
 {
@@ -99,8 +99,27 @@ namespace StageWise.Services.Business.Implementations
 
             if (request.Avatar != null)
             {
-                var avatarUrl = await _s3Service.UploadFileAsync(request.Avatar);
-                teacher.Avatar = avatarUrl;
+                if (request.Avatar != null)
+                {
+                    var key = $"avatars/{Guid.NewGuid()}_{request.Avatar.FileName}";
+
+                    teacher.Avatar = key;
+
+                    using var memoryStream = new MemoryStream();
+                    await request.Avatar.CopyToAsync(memoryStream);
+
+                    var fileMessage = new S3UploadMessage
+                    {
+                        FileBytes = memoryStream.ToArray(),
+                        FileName = request.Avatar.FileName,
+                        ContentType = request.Avatar.ContentType,
+                        Key = key
+                    };
+
+                    var message = JsonSerializer.Serialize(fileMessage);
+
+                    await _messageQueue.Publish("S3UploadQueue", message);
+                }
             }
 
             if (request.BlockNumber != null)

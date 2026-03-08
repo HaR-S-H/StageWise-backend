@@ -48,6 +48,7 @@ builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 // Worker
 builder.Services.AddHostedService<EmailWorker>();
+builder.Services.AddHostedService<S3Worker>();
 
 // DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
