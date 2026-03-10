@@ -33,7 +33,14 @@ namespace StageWise.Controllers
         [HttpGet("All")]
         public async Task<ActionResult<List<GetDepartmentResponse>>> GetDepartments()
         {
-            var response=await _departmentService.GetDepartmentsAsync();
+            var response = await _departmentService.GetDepartmentsAsync();
+            return Ok(response);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult<DeleteDepartmentResponse>> DeleteDepartment(int Id)
+        {
+            var response = await _departmentService.DeleteDepartmentAsync(Id);
             return Ok(response);
         }
     }
