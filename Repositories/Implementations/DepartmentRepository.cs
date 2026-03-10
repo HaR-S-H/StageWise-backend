@@ -30,5 +30,10 @@ namespace StageWise.Repositories.Implementations
         {
             return await _context.Departments.Include(d=>d.Hod).FirstOrDefaultAsync(d => d.Id == Id);
         }
+
+        public async Task<List<Department>> GetAllAsync()
+        {
+            return await _context.Departments.Include(d => d.Hod).ToListAsync();
+        }
     }
 }

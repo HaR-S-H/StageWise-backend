@@ -7,5 +7,6 @@ namespace StageWise.Services.Business.Interfaces
     {
         Task<CreateDepartmentResponse> CreateDepartmentAsync(CreateDepartmentRequest request);
         Task<GetDepartmentResponse> GetDepartmentAsync(int Id);
+        Task<List<GetDepartmentResponse>> GetDepartmentsAsync();
     }
 }

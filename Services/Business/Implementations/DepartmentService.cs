@@ -45,7 +45,13 @@ namespace StageWise.Services.Business.Implementations
             var deparment = await _departmentRepository.GetByIdAsync(Id);
             if (deparment == null) throw new AppException("Department not found", 404);
             return _mapper.Map<GetDepartmentResponse>(deparment);
-            
+
+        }
+        public async Task<List<GetDepartmentResponse>> GetDepartmentsAsync()
+        {
+            var departments = await _departmentRepository.GetAllAsync();
+            if (departments.Count == 0) throw new AppException("No departments found", 404);
+            return _mapper.Map<List<GetDepartmentResponse>>(departments);
         }
     }
 }

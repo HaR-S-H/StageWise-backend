@@ -29,5 +29,12 @@ namespace StageWise.Controllers
             var response = await _departmentService.GetDepartmentAsync(Id);
             return Ok(response);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("All")]
+        public async Task<ActionResult<List<GetDepartmentResponse>>> GetDepartments()
+        {
+            var response=await _departmentService.GetDepartmentsAsync();
+            return Ok(response);
+        }
     }
 }
