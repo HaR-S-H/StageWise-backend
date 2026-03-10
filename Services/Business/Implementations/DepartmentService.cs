@@ -13,7 +13,7 @@ namespace StageWise.Services.Business.Implementations
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IHodRepository _hodRepository;
         private readonly IMapper _mapper;
-        public DepartmentService(IDepartmentRepository departmentRepository,IHodRepository hodRepository,IMapper mapper)
+        public DepartmentService(IDepartmentRepository departmentRepository, IHodRepository hodRepository, IMapper mapper)
         {
             _departmentRepository = departmentRepository;
             _hodRepository = hodRepository;
@@ -23,7 +23,7 @@ namespace StageWise.Services.Business.Implementations
         {
             var existingDepartment = await _departmentRepository.GetByNameAsync(request.Name);
             if (existingDepartment != null) throw new AppException("Department already exists", 409);
-            var existingHod=await _hodRepository.GetByIdAsync(request.HodId);
+            var existingHod = await _hodRepository.GetByIdAsync(request.HodId);
             if (existingHod == null) throw new AppException("Hod not found", 404);
             var department = new Department
             {
@@ -37,7 +37,7 @@ namespace StageWise.Services.Business.Implementations
                 Success = true,
                 Message = "Department created successfully",
             };
-            
+
         }
 
         public async Task<GetDepartmentResponse> GetDepartmentAsync(int Id)
@@ -53,5 +53,14 @@ namespace StageWise.Services.Business.Implementations
             if (departments.Count == 0) throw new AppException("No departments found", 404);
             return _mapper.Map<List<GetDepartmentResponse>>(departments);
         }
+        public async Task<DeleteDepartmentResponse> DeleteDepartmentAsync(int Id)
+        {
+            var department = await _departmentRepository.GetByIdAsync(Id);
+            if (department == null) throw new AppException("Department not found", 404);
+            await _departmentRepository.DeleteAsync(department);
+            await _departmentRepository.SaveAsync();
+            return new DeleteDepartmentResponse { Success = true, Message = "Department deleted successfully" };
+        }
+
     }
 }

@@ -35,5 +35,10 @@ namespace StageWise.Repositories.Implementations
         {
             return await _context.Departments.Include(d => d.Hod).ToListAsync();
         }
+
+        public async Task DeleteAsync(Department department)
+        {
+            _context.Departments.Remove(department);
+        }
     }
 }
