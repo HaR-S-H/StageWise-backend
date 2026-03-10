@@ -6,6 +6,7 @@ namespace StageWise.Repositories.Interfaces
     {
         Task<Department?> GetByNameAsync(string Name);
         Task AddAsync(Department department);
+        Task<Department?> GetByIdAsync(int Id);
         Task SaveAsync();
     }
 }

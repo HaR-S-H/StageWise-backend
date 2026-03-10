@@ -1,3 +1,4 @@
+using AutoMapper;
 using StageWise.Dtos.Department.Request;
 using StageWise.Dtos.Department.Response;
 using StageWise.Helpers.Exceptions;
@@ -11,10 +12,12 @@ namespace StageWise.Services.Business.Implementations
     {
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IHodRepository _hodRepository;
-        public DepartmentService(IDepartmentRepository departmentRepository,IHodRepository hodRepository)
+        private readonly IMapper _mapper;
+        public DepartmentService(IDepartmentRepository departmentRepository,IHodRepository hodRepository,IMapper mapper)
         {
             _departmentRepository = departmentRepository;
             _hodRepository = hodRepository;
+            _mapper = mapper;
         }
         public async Task<CreateDepartmentResponse> CreateDepartmentAsync(CreateDepartmentRequest request)
         {
@@ -34,6 +37,14 @@ namespace StageWise.Services.Business.Implementations
                 Success = true,
                 Message = "Department created successfully",
             };
+            
+        }
+
+        public async Task<GetDepartmentResponse> GetDepartmentAsync(int Id)
+        {
+            var deparment = await _departmentRepository.GetByIdAsync(Id);
+            if (deparment == null) throw new AppException("Department not found", 404);
+            return _mapper.Map<GetDepartmentResponse>(deparment);
             
         }
     }

@@ -6,6 +6,7 @@ using StageWise.Dtos.Hod.Request;
 using StageWise.Dtos.Hod.Response;
 using StageWise.Dtos.Teacher.Response;
 using StageWise.Dtos.Teacher.Request;
+using StageWise.Dtos.Department.Response;
 
 namespace StageWise.Mappings
 {
@@ -25,6 +26,7 @@ namespace StageWise.Mappings
             CreateMap<CreateTeacherRequest,Teacher>();
             CreateMap<Teacher, CreateTeacherResponse>();
             CreateMap<Teacher, GetTeacherResponse>();
+            CreateMap<Department, GetDepartmentResponse>();
             
             // You can add more mappings here later
             // CreateMap<Entity, Dto>();
