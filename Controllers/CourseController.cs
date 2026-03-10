@@ -26,7 +26,14 @@ namespace StageWise.Controllers
         [HttpGet("{Id}")]
         public async Task<ActionResult<GetCourseResponse>> GetCourse(int Id)
         {
-            var response =await _courseService.GetCourseAsync(Id);
+            var response = await _courseService.GetCourseAsync(Id);
+            return Ok(response);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("All")]
+        public async Task<ActionResult<List<GetCourseResponse>>> GetCourses()
+        {
+            var response = await _courseService.GetCoursesAsync();
             return Ok(response);
         }
     }
