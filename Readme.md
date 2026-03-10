@@ -1,70 +1,171 @@
-# StageWise – Project Progress Tracking System (Backend)
+# StageWise -- Project Progress Tracking System (Backend)
 
-##  Overview  
-**StageWise** is a project tracking system designed for academic institutions to monitor student project development in a structured and transparent way.
+## Overview
 
-In many colleges, once projects are assigned, there is no proper system to track whether students are genuinely working on them. As a result, some students copy projects from GitHub or other platforms without real learning or contribution. **StageWise** addresses this problem by introducing a *stage-based project workflow*, where each stage represents a meaningful step in the project’s development.
+**StageWise** is a backend system designed for academic institutions to
+track and manage student project progress in a structured and
+transparent way.
 
-This allows **teachers and mentors** to:
-- Track individual student progress
-- Verify originality and consistency of work
-- Identify delays or issues early
-- Provide timely guidance and feedback  
+In many colleges, once projects are assigned there is no proper system
+to verify whether students are actually working on their projects. This
+sometimes leads to students copying projects from external sources
+without genuine learning.
 
----
+**StageWise** solves this problem by introducing a **stage‑based
+workflow**, where each project is divided into multiple stages
+representing real development milestones. Teachers, mentors, and
+department heads can track progress, review submissions, and guide
+students throughout the project lifecycle.
 
-##  Key Idea  
-Every project is divided into multiple **stages**, each representing a specific milestone in the development process (e.g., idea submission, design, implementation, testing, final submission).
+------------------------------------------------------------------------
 
-Students update their progress stage by stage, while faculty can monitor, review, and evaluate their work throughout the project lifecycle.
+# Key Idea
 
----
+Every project progresses through predefined stages such as:
 
-##  Backend Implementation  
+-   Project Proposal
+-   Requirement Analysis
+-   System Design
+-   Implementation
+-   Testing
+-   Final Submission
 
-This repository contains the **backend** for StageWise.
+Students submit updates for each stage while mentors and faculty review
+and approve them.
 
-###  Features Implemented (Day 1)
-**Date:** 13-01-2026  
+------------------------------------------------------------------------
 
-- Created a clean and scalable **folder structure**
-- Implemented core **models** (e.g., `Student`)
-- Added **data validation** using  
-  `System.ComponentModel.DataAnnotations` to ensure:
-  - Required fields are enforced  
-  - Input formats are validated  
-  - Data integrity is maintained  
+# Core Features
 
----
+## Authentication & Authorization
 
-##  Project Structure  
-The project follows a well-organized backend architecture with separate layers for:
-- Models  
-- Controllers  
-- Services (if applicable)  
-- Data Access / Database Context  
-- Configuration  
+-   Secure authentication using **JWT (JSON Web Tokens)**
+-   Role-based access control
+-   Separate roles such as **Admin and HOD**
 
-This ensures maintainability, readability, and easy future expansion.
+## Department Management
 
----
+-   Create departments
+-   Assign HODs to departments
+-   Activate or deactivate departments
 
-##  Purpose of the Project  
-StageWise is built as a **college project** with a real-world problem statement:
+## HOD Management
 
-> *To provide a transparent, structured, and trackable system for monitoring student project development and preventing plagiarism or last-minute submissions.*
+-   Create and update HOD accounts
+-   Assign departments
+-   Manage HOD status
 
----
+## Project Tracking
 
-##  Future Enhancements (Planned)
-- Role-based access (Student / Mentor / Admin)
-- Project stage management
-- Progress reports and analytics
-- File submissions and version tracking
-- Plagiarism detection integration
+-   Create projects
+-   Track stage-based progress
+-   Monitor submission timelines
 
----
+## File Storage
 
-##  Author  
-**Harsh Gupta**  
-Backend Developer – StageWise Project  
+-   Upload project documents and reports
+-   Secure storage using **AWS S3**
+
+------------------------------------------------------------------------
+
+# Architecture
+
+The project follows a **layered architecture** to keep the code clean
+and maintainable.
+
+Controller Layer\
+Handles HTTP requests and responses.
+
+Service Layer\
+Contains the business logic of the application.
+
+Repository Layer\
+Handles database access and queries.
+
+Database Layer\
+Stores application data.
+
+------------------------------------------------------------------------
+
+# Technology Stack
+
+## Backend
+
+-   C#
+-   ASP.NET Core Web API
+-   Entity Framework Core
+
+## Authentication
+
+-   JWT (JSON Web Token)
+
+## Database
+
+-   SQL Server
+
+## Caching
+
+-   Redis
+
+## Messaging
+
+-   RabbitMQ
+
+## Cloud Storage
+
+-   AWS S3
+
+## API Documentation
+
+-   Swagger / OpenAPI
+
+------------------------------------------------------------------------
+
+# External Integrations
+
+## Redis
+
+Redis is used for caching frequently accessed data to improve API
+performance and reduce database load.
+
+## RabbitMQ
+
+RabbitMQ is used for asynchronous messaging and background task
+processing.
+
+## AWS S3
+
+AWS S3 is used for storing files such as project documents and reports
+securely.
+
+------------------------------------------------------------------------
+
+# Authentication Flow
+
+1.  User sends email and password to login endpoint
+2.  Credentials are validated
+3.  Server generates a JWT token
+4.  Client stores token
+5.  Client sends token in Authorization header for protected APIs
+
+Example:
+
+Authorization: Bearer `<JWT_TOKEN>`{=html}
+
+------------------------------------------------------------------------
+
+
+# Future Improvements
+
+-   Email notification system
+-   AI based plagiarism detection
+-   Real-time stage updates
+-   Docker support
+-   CI/CD integration
+
+------------------------------------------------------------------------
+
+# Author
+
+Harsh Gupta\
+Backend Developer
