@@ -42,5 +42,12 @@ namespace StageWise.Services.Business.Implementations
             return _mapper.Map<GetCourseResponse>(course);
             
         }
+
+        public async Task<List<GetCourseResponse>> GetCoursesAsync()
+        {
+            var courses=await _courseRepository.GetAllAsync();
+            if (courses.Count == 0) throw new AppException("No courses found", 404);
+            return _mapper.Map<List<GetCourseResponse>>(courses);
+        }
     }
 }
