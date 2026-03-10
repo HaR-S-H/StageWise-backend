@@ -35,6 +35,19 @@ namespace StageWise.Services.Business.Implementations
             };
         }
 
+        public async Task<DeleteCourseResponse> DeleteCourseAsync(int Id)
+        {
+            var existingCourse = await _courseRepository.GetByIdAsync(Id);
+            if (existingCourse == null) throw new AppException("Course not found", 404);
+            await _courseRepository.DeleteAsync(existingCourse);
+            await _courseRepository.SaveAsync();
+            return new DeleteCourseResponse
+            {
+                Success = true,
+                Message = "Course deleted successfully",
+            };
+        }
+
         public async Task<GetCourseResponse> GetCourseAsync(int Id)
         {
             var course = await _courseRepository.GetByIdAsync(Id);

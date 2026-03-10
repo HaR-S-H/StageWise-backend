@@ -36,5 +36,12 @@ namespace StageWise.Controllers
             var response = await _courseService.GetCoursesAsync();
             return Ok(response);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult<DeleteCourseResponse>> DeleteCourse(int Id)
+        {
+            var response = await _courseService.DeleteCourseAsync(Id);
+            return Ok(response);
+        }
     }
 }

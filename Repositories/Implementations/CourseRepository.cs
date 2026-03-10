@@ -17,6 +17,11 @@ namespace StageWise.Repositories.Implementations
             await _context.Courses.AddAsync(course);
         }
 
+        public async Task DeleteAsync(Course course)
+        {
+             _context.Courses.Remove(course);
+        }
+
         public async Task<List<Course>> GetAllAsync()
         {
             return await _context.Courses.Include(c=>c.Department!).ThenInclude(d=>d.Hod).ToListAsync();
