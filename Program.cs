@@ -39,6 +39,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IHodService, HodService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IClassService, ClassService>();
