@@ -6,6 +6,7 @@ namespace StageWise.Dtos.Class.Response
 {
     public class GetClassResponse
     {
+        public required int Id { get; set; }
         public required string Name { get; set; }
         public required GetCourseResponse Course { get; set; }
         public required Specialization Specialization { get; set; }
