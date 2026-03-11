@@ -7,5 +7,6 @@ namespace StageWise.Services.Business.Interfaces
     {
         Task<CreateClassResponse> CreateClassAsync(CreateClassRequest request);
         Task<GetClassResponse> GetClassAsync(int Id);
+        Task<List<GetClassResponse>> GetClassesAsync();
     }
 }

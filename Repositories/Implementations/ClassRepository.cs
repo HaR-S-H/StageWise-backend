@@ -23,9 +23,9 @@ namespace StageWise.Repositories.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<List<Class>> GetAllAsync()
+        public async Task<List<Class>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Classes.ToListAsync();
         }
 
         public async Task<Class?> GetByIdAsync(int Id)

@@ -23,10 +23,17 @@ namespace StageWise.Controllers
             return Ok(response);
         }
         [HttpGet("{Id}")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GetClassResponse>> GetClass(int Id)
         {
             var response = await _classService.GetClassAsync(Id);
+            return Ok(response);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("All")]
+        public async Task<ActionResult<List<GetClassResponse>>> GetClasses()
+        {
+            var response = await _classService.GetClassesAsync();
             return Ok(response);
         }
     }

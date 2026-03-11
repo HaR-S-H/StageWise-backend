@@ -38,5 +38,12 @@ namespace StageWise.Services.Business.Implementations
             if (@class == null) throw new AppException("Class not found", 404);
             return _mapper.Map<GetClassResponse>(@class);
         }
+
+        public async Task<List<GetClassResponse>> GetClassesAsync()
+        {
+            var classes = await _classRepository.GetAllAsync();
+            if (classes.Count == 0) throw new AppException("No classes found", 404);
+            return _mapper.Map<List<GetClassResponse>>(classes);
+        }
     }
 }
