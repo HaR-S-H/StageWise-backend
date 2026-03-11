@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IHodService, HodService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // Repositories
@@ -48,6 +50,7 @@ builder.Services.AddScoped<IHodRepository, HodRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 // Worker
@@ -100,6 +103,12 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddAuthorization();
 
