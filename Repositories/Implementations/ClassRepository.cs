@@ -18,9 +18,10 @@ namespace StageWise.Repositories.Implementations
             await _context.Classes.AddAsync(Class);
         }
 
-        public Task DeleteAsync(Class Class)
+        public async Task DeleteAsync(Class Class)
         {
-            throw new NotImplementedException();
+             _context.Classes.Remove(Class);
+
         }
 
         public async Task<List<Class>> GetAllAsync()

@@ -32,6 +32,19 @@ namespace StageWise.Services.Business.Implementations
             };
         }
 
+        public async Task<DeleteClassResponse> DeleteClassAsync(int Id)
+        {
+            var existingClass = await _classRepository.GetByIdAsync(Id);
+            if (existingClass == null) throw new AppException("Class not found", 404);
+            await _classRepository.DeleteAsync(existingClass);
+            await _classRepository.SaveAsync();
+            return new DeleteClassResponse
+            {
+                Success = true,
+                Message = "Class deleted successfully",
+            };
+        }
+
         public async Task<GetClassResponse> GetClassAsync(int Id)
         {
             var @class = await _classRepository.GetByIdAsync(Id);
@@ -45,5 +58,6 @@ namespace StageWise.Services.Business.Implementations
             if (classes.Count == 0) throw new AppException("No classes found", 404);
             return _mapper.Map<List<GetClassResponse>>(classes);
         }
+        
     }
 }
