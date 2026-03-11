@@ -19,6 +19,18 @@ namespace StageWise.Repositories.Implementations
            await _context.Students.AddAsync(student);
         }
 
+        public Task<List<Student>> GetAllAsync()
+        {
+            return _context.Students
+                .Include(s => s.Class!)
+                    .ThenInclude(c => c.Advisor)
+                .Include(s => s.Class!)
+                    .ThenInclude(c => c.Course!)
+                        .ThenInclude(c => c.Department!)
+                            .ThenInclude(d => d.Hod)
+                .ToListAsync();
+        }
+
         public async Task<Student?> GetByEmailAsync(string email)
         {
             return await _context.Students
