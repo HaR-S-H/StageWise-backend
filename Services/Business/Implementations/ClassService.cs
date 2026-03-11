@@ -31,5 +31,12 @@ namespace StageWise.Services.Business.Implementations
                 Message = "Class created successfully",
             };
         }
+
+        public async Task<GetClassResponse> GetClassAsync(int Id)
+        {
+            var @class = await _classRepository.GetByIdAsync(Id);
+            if (@class == null) throw new AppException("Class not found", 404);
+            return _mapper.Map<GetClassResponse>(@class);
+        }
     }
 }

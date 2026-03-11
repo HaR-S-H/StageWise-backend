@@ -28,9 +28,9 @@ namespace StageWise.Repositories.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<Class?> GetByIdAsync(int Id)
+        public async Task<Class?> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            return await _context.Classes.Include(c => c.Advisor).Include(c => c.Course!).ThenInclude(a => a.Department!).ThenInclude(d => d.Hod).FirstOrDefaultAsync(c => c.Id == Id);
         }
 
         public async Task<Class?> GetByNameAsync(string Name)
