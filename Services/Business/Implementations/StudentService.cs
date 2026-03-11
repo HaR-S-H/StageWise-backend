@@ -53,5 +53,11 @@ namespace StageWise.Services.Business.Implementations
             };
         }
 
+        public async Task<GetStudentResponse> GetStudentAsync(int Id)
+        {
+            var student = await _studentRepository.GetByIdAsync(Id);
+            if (student == null) throw new AppException("Student Not found", 404);
+            return _mapper.Map<GetStudentResponse>(student);
+        }
     }
 }

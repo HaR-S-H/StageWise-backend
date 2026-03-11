@@ -31,6 +31,11 @@ namespace StageWise.Repositories.Implementations
      .FirstOrDefaultAsync(s => s.Email == email);
         }
 
+        public async Task<Student?> GetByIdAsync(int Id)
+        {
+            return await _context.Students.Include(s=>s.Class!).ThenInclude(c=>c.Course!).ThenInclude(c=>c.Department!).ThenInclude(c=>c.Hod).Include(c=>c.Class!).ThenInclude(c=>c.Advisor).Include(s=>s.Class).FirstOrDefaultAsync(s => s.Id == Id);
+        }
+
         public Task SaveAsync()
         {
             return _context.SaveChangesAsync();
