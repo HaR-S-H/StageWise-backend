@@ -53,6 +53,19 @@ namespace StageWise.Services.Business.Implementations
             };
         }
 
+        public async Task<DeleteStudentResponse> DeleteStudentAsync(int Id)
+        {
+            var student = await _studentRepository.GetByIdAsync(Id);
+            if (student == null) throw new AppException("Student not found", 404);
+            await _studentRepository.DeleteAsync(student);
+            await _studentRepository.SaveAsync();
+            return new DeleteStudentResponse
+            {
+                Success = true,
+                Message = "Student deleted successfully"
+            };
+        }
+
         public async Task<GetStudentResponse> GetStudentAsync(int Id)
         {
             var student = await _studentRepository.GetByIdAsync(Id);

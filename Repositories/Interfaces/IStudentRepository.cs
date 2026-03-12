@@ -6,6 +6,7 @@ namespace StageWise.Repositories.Interfaces
         Task<Student?> GetByEmailAsync(string Email);
         Task AddAsync(Student student);
         Task<Student?> GetByIdAsync(int Id);
+        Task DeleteAsync(Student student);
         Task<List<Student>> GetAllAsync();
         Task SaveAsync();
     }
