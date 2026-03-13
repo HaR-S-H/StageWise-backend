@@ -25,11 +25,6 @@ namespace StageWise.Data
         public DbSet<ProjectStage> ProjectStages { get; set; }
 
         public DbSet<StudentGroup> StudentGroups { get; set; }
-        public DbSet<StudentGroupMember> StudentGroupMembers { get; set; }
-
-        public DbSet<GroupStageProgress> GroupStageProgresses { get; set; }
-        public DbSet<GroupStageDocument> GroupStageDocuments { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -81,27 +76,6 @@ namespace StageWise.Data
                 .HasForeignKey(sg => sg.ProjectId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // StudentGroup -> Members
-            modelBuilder.Entity<StudentGroupMember>()
-                .HasOne(m => m.StudentGroup)
-                .WithMany(sg => sg.Members)
-                .HasForeignKey(m => m.StudentGroupId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // StudentGroup -> StageProgress
-            modelBuilder.Entity<GroupStageProgress>()
-                .HasOne(g => g.StudentGroup)
-                .WithMany(sg => sg.StageProgress)
-                .HasForeignKey(g => g.StudentGroupId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // StageProgress -> Documents
-            modelBuilder.Entity<GroupStageDocument>()
-                .HasOne(d => d.GroupStageProgress)
-                .WithMany(g => g.Documents)
-                .HasForeignKey(d => d.GroupStageProgressId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             // ===============================
             // ALL OTHERS REMAIN RESTRICT
             // ===============================
@@ -120,19 +94,6 @@ namespace StageWise.Data
                 .HasForeignKey(sg => sg.MentorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // StudentGroupMember -> Student
-            modelBuilder.Entity<StudentGroupMember>()
-                .HasOne(m => m.Student)
-                .WithMany()
-                .HasForeignKey(m => m.StudentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // GroupStageProgress -> ProjectStage
-            modelBuilder.Entity<GroupStageProgress>()
-                .HasOne(g => g.ProjectStage)
-                .WithMany()
-                .HasForeignKey(g => g.ProjectStageId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             // Hod -> Department
            

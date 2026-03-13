@@ -1,6 +1,6 @@
 namespace StageWise.Helpers.Enums
 {
-    public enum Stages{
+    public enum StageType{
     
         IdeaSubmission,
         MeetMentor,
