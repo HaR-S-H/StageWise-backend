@@ -36,7 +36,17 @@ namespace StageWise.Repositories.Implementations
 
         public async Task<Class?> GetByNameAsync(string Name)
         {
-            return await _context.Classes.Include(c => c.Advisor).Include(c => c.Course!).ThenInclude(a=>a.Department!).ThenInclude(d=>d.Hod).FirstOrDefaultAsync(c => c.Name == Name);
+            return await _context.Classes.Include(c => c.Advisor).Include(c => c.Course!).ThenInclude(a => a.Department!).ThenInclude(d => d.Hod).FirstOrDefaultAsync(c => c.Name == Name);
+        }
+
+        public Task<List<Class>> GetClassesByCourseIdsAsync(List<int> courseIds)
+        {
+            return _context.Classes.Where(c => courseIds.Contains(c.CourseId)).Include(c => c.Advisor).Include(c => c.Course!).ThenInclude(a => a.Department!).ThenInclude(d => d.Hod).ToListAsync();
+        }
+
+        public async Task<List<Class>> GetClassesByTeacherIdAsync(int teacherId)
+        {
+            return await _context.Classes.Where(c => c.AdvisorId == teacherId).Include(c => c.Advisor).Include(c => c.Course!).ThenInclude(a => a.Department!).ThenInclude(d => d.Hod).ToListAsync();
         }
 
         public async Task SaveAsync()

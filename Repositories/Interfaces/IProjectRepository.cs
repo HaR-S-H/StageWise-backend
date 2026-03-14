@@ -6,6 +6,10 @@ namespace StageWise.Repositories.Interfaces
     {
         Task AddAsync(Project project);
         Task<Project?> GetByIdAsync(int Id);
+        Task<List<Project>> GetAllAsync();
+        Task<List<Project>> GetProjectsByClassIdsAsync(List<int> classIds);
+        // Task<List<Project>> GetProjectsByTeacherIdAsync(int teacherId);
+        // Task<List<Project>> GetProjectsByDepartmentIdAsync(int departmentId);
         Task SaveAsync();
     }
 }

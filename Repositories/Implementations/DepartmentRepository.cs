@@ -40,5 +40,10 @@ namespace StageWise.Repositories.Implementations
         {
             _context.Departments.Remove(department);
         }
+
+        public Task<Department?> GetByHodIdAsync(int hodId)
+        {
+           return _context.Departments.Include(d => d.Hod).FirstOrDefaultAsync(d => d.HodId == hodId);
+        }
     }
 }

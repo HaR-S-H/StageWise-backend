@@ -39,6 +39,12 @@ namespace StageWise.Repositories.Implementations
         {
             return await _context.Courses.FirstOrDefaultAsync(c => c.Name == Name);
         }
+
+        public Task<List<Course>> GetCoursesByDepartmentIdAsync(int departmentId)
+        {
+           return _context.Courses.Where(c => c.DepartmentId == departmentId).Include(c => c.Department!).ThenInclude(d => d.Hod).ToListAsync();
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

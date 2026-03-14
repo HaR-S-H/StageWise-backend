@@ -9,6 +9,7 @@ namespace StageWise.Repositories.Interfaces
         Task<Course?> GetByIdAsync(int Id);
         Task<List<Course>> GetAllAsync();
         Task DeleteAsync(Course course);
+        Task<List<Course>> GetCoursesByDepartmentIdAsync(int departmentId);
         Task SaveAsync();
     }
 }

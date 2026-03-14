@@ -15,11 +15,22 @@ namespace StageWise.Repositories.Implementations
         {
             await _context.Projects.AddAsync(project);
         }
+
+        public Task<List<Project>> GetAllAsync()
+        {
+            return _context.Projects.ToListAsync();
+        }
+
         public async Task<Project?> GetByIdAsync(int Id)
         {
             return await _context.Projects.FirstOrDefaultAsync(p => p.Id == Id);
         }
-
+        public async Task<List<Project>> GetProjectsByClassIdsAsync(List<int> classIds)
+        {
+            return await _context.Projects
+                .Where(p => classIds.Contains(p.ClassId))
+                .ToListAsync();
+        }
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

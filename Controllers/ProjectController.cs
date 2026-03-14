@@ -28,5 +28,12 @@ namespace StageWise.Controllers
             var response = await _projectService.GetProjectAsync(Id);
             return Ok(response);
         }
+        [HttpGet("All")]
+        [Authorize(Roles = "Admin,Teacher,Student,Hod")]
+        public async Task<ActionResult<List<GetProjectResponse>>> GetProjects()
+        {
+            var response = await _projectService.GetProjectsAsync();
+            return Ok(response);
+        }
     }
 }
