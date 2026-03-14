@@ -41,6 +41,15 @@ namespace StageWise.Services.Business.Implementations
             return new CreateProjectResponse { Success = true, Message = "Project created successfully" };
         }
 
+        public async Task<DeleteProjectResponse> DeleteProjectAsync(int Id)
+        {
+            var project=await _projectRepository.GetByIdAsync(Id);
+            if (project == null) throw new AppException("Project not found", 404);
+            await _projectRepository.DeleteAsync(project);
+            await _projectRepository.SaveAsync();
+            return new DeleteProjectResponse { Success = true, Message = "Project deleted successfully" };
+        }
+
         public async Task<GetProjectResponse> GetProjectAsync(int Id)
         {
             var project = await _projectRepository.GetByIdAsync(Id);

@@ -8,5 +8,6 @@ namespace StageWise.Services.Business.Interfaces
         Task<CreateProjectResponse> CreateProjectAsync(CreateProjectRequest request);
         Task<GetProjectResponse> GetProjectAsync(int Id);
         Task<List<GetProjectResponse>> GetProjectsAsync();
+        Task<DeleteProjectResponse> DeleteProjectAsync(int Id);
     }
 }

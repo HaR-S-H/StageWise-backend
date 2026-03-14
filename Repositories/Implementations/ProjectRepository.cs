@@ -16,6 +16,11 @@ namespace StageWise.Repositories.Implementations
             await _context.Projects.AddAsync(project);
         }
 
+        public async Task DeleteAsync(Project project)
+        {
+            _context.Projects.Remove(project);
+        }
+
         public Task<List<Project>> GetAllAsync()
         {
             return _context.Projects.ToListAsync();

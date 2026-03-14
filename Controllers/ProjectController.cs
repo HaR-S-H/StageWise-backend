@@ -35,5 +35,12 @@ namespace StageWise.Controllers
             var response = await _projectService.GetProjectsAsync();
             return Ok(response);
         }
+        [HttpDelete("{Id}")]
+        [Authorize(Roles = "Admin,Teacher,Hod")]
+        public async Task<ActionResult<DeleteProjectResponse>> DeleteProject(int Id)
+        {
+            var response = await _projectService.DeleteProjectAsync(Id);
+            return Ok(response);
+        }
     }
 }
