@@ -13,6 +13,7 @@ using StageWise.Dtos.Class.Response;
 using StageWise.Dtos.Student.Request;
 using StageWise.Dtos.Student.Response;
 using StageWise.Dtos.Project.Response;
+using StageWise.Dtos.Stage.Request;
 
 namespace StageWise.Mappings
 {
@@ -39,6 +40,7 @@ namespace StageWise.Mappings
             CreateMap<CreateStudentRequest, Student>();
             CreateMap<Student, GetStudentResponse>();
             CreateMap<Project, GetProjectResponse>();
+            CreateMap<CreateStageRequest, ProjectStage>();
 
             // You can add more mappings here later
             // CreateMap<Entity, Dto>();
