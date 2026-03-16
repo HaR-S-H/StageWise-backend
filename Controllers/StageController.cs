@@ -22,5 +22,11 @@ namespace StageWise.Controllers
             var response = await _stageService.CreateStageAsync(request);
             return Ok(response);
         }
+        public async Task<ActionResult<CreateStageResponse>> GetStage(CreateStageRequest request)
+        {
+            var response = await _stageService.CreateStageAsync(request);
+            return Ok(response);
+        }
+        
     }
 }
