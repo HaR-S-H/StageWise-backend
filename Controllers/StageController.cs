@@ -22,11 +22,14 @@ namespace StageWise.Controllers
             var response = await _stageService.CreateStageAsync(request);
             return Ok(response);
         }
-        public async Task<ActionResult<CreateStageResponse>> GetStage(CreateStageRequest request)
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Teacher")]
+        public async Task<ActionResult<DeleteStageResponse>> DeleteStage(int Id)
         {
-            var response = await _stageService.CreateStageAsync(request);
+            var response = await _stageService.DeleteStageAsync(Id);
             return Ok(response);
         }
+    
         
     }
 }

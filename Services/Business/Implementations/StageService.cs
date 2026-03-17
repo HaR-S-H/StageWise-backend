@@ -23,5 +23,17 @@ namespace StageWise.Services.Business.Implementations
             await _stageRepository.SaveAsync();
             return new CreateStageResponse { Success = true, Message = "Stage created successfully" };
         }
+
+        public async Task<DeleteStageResponse> DeleteStageAsync(int id)
+        {
+            var stage = await _stageRepository.GetByIdAsync(id);
+            if (stage == null)
+            {
+                return new DeleteStageResponse { Success = false, Message = "Stage not found" };
+            }
+            await _stageRepository.DeleteAsync(stage);
+            await _stageRepository.SaveAsync();
+            return new DeleteStageResponse { Success = true, Message = "Stage deleted successfully" };
+        }
     }
 }
